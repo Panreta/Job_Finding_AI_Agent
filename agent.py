@@ -12,16 +12,14 @@ def run_agent():
     conversation_history = load_conversation_history()
     
     while True:
-        user_input = input("You: ")
+        user_input = input("You: \n")
         
         if user_input.lower() == 'quit':
-            print("Goodbye!")
+            print("Goodbye! Remember to rock today!")
             break
         
-        # Build prompt with available tools
         prompt = build_prompt(user_input, conversation_history)
         
-        # Ask LLM
         response = ask_llama(prompt)
         
         # Check if LLM wants to use a tool
@@ -66,11 +64,10 @@ def parse_tool_call(response):
         # Simple parsing: [TOOL: search_jobs] {"keywords": "python", "location": "Seattle"}
         tool_part = response.split("[TOOL:")[1].split("]")[0].strip()
         args_part = response.split("]")[1].strip()
-        
-        tool_name = tool_part
+
         tool_args = json.loads(args_part) if args_part else {}
         
-        return tool_name, tool_args
+        return tool_part, tool_args
     except:
         return None, {}
 

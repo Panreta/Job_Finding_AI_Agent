@@ -5,7 +5,7 @@ import json
 OLLAMA_URL = "http://localhost:11434/api/generate"
 MODEL = "llama3.2"
 
-def ask_llama(prompt, stream=False):
+def ask_llama(prompt, stream=True):
     try:
         response = requests.post(
             OLLAMA_URL,
@@ -20,8 +20,8 @@ def ask_llama(prompt, stream=False):
         if response.status_code == 200: # When you make an HTTP request, the server responds with a status code 
 
             # 404: Not Found, 500: Internal Server Error, 505: HTTP Version Not Supported
-            result = response.json()
-            return result.get('response', '').strip()
+            response = response.json()
+            return response.get('response', '').strip()
         else:
             return f"Error: Ollama returned status {response.status_code}"
     
