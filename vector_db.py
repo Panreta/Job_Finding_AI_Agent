@@ -7,7 +7,7 @@ from chromadb.config import Settings
 #     anonymized_telemetry=False
 # ))
 
-client = chromadb.PersistentClient(path="./data/chroma_db")
+client = chromadb.PersistentClient(path="./data/chroma_db")## persistent: save to disk, default is in-memory
 
 
 # Create or get collections
@@ -21,12 +21,12 @@ resume_collection = client.get_or_create_collection(
     metadata={"description": "User resume and skills"}
 )
 
-def add_job_to_db(job_id, job_title, company, location, description, url):
+def add_job_to_db(job_id, job_title, company, location, description, url = None):
     """Add a single job to the vector database"""
     # Combine text for embedding
     job_text = f"{job_title} at {company}. Location: {location}. {description}"
     
-    jobs_collection.add(
+    jobs_collection.add( # doc:explicit data info, metadatas:structural data form
         documents=[job_text],
         metadatas=[{
             "job_title": job_title,
@@ -55,8 +55,9 @@ def search_jobs_by_similarity(query, n_results=5):
         query_texts=[query],
         n_results=n_results
     )
+    # n_results determines how many similar jobs to return
     
-    # Format results
+    # Format results just give out a format way to show, but the results are determined
     jobs = []
     if results['ids'] and len(results['ids'][0]) > 0:
         for i in range(len(results['ids'][0])):
@@ -72,7 +73,7 @@ def search_jobs_by_similarity(query, n_results=5):
     
     return jobs
 
-def match_resume_to_jobs(n_results=10):
+def match_resume_to_jobs(n_results=5):
     """Find jobs that match user's resume"""
     # Get resume from collection
     resume_results = resume_collection.get(ids=["user_resume"])
