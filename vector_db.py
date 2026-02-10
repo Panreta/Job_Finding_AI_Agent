@@ -21,8 +21,22 @@ resume_collection = client.get_or_create_collection(
     metadata={"description": "User resume and skills"}
 )
 
+def job_exists(job_id):
+    """Check if job already exists in database"""
+    try:
+        result = jobs_collection.get(ids=[job_id])
+        return len(result['ids']) > 0
+    except:
+        return False
+
 def add_job_to_db(job_id, job_title, company, location, description, url = None):
     """Add a single job to the vector database"""
+
+        # CHECK IF ALREADY EXISTS
+    if job_exists(job_id):
+        print(f"Job already exists: {job_title} at {company} (ID: {job_id}) - SKIPPED")
+        return f"Job already exists: {job_id}"
+    
     # Combine text for embedding
     job_text = f"{job_title} at {company}. Location: {location}. {description}"
     
@@ -111,22 +125,101 @@ def clear_jobs_db():
     jobs_collection = client.get_or_create_collection(name="jobs")
     return "Jobs database cleared"
 
-# Test function
-if __name__ == "__main__":
-    print("Testing ChromaDB setup...")
+def get_job_by_id(job_id):
+    """Retrieve a specific job by ID"""
+    result = jobs_collection.get(ids=[job_id])
     
-    # Test adding a job
-    result = add_job_to_db(
-        job_id="Nujades",
-        job_title="Python Developer",
-        company="TestCorp",
-        location="Seattle",
-        description="Looking for Python developer with AI experience",
-        url="https://example.com/job1"
-    )
-    print(result)
+    if result['ids']:
+        return {
+            "id": result['ids'][0],
+            "document": result['documents'][0],
+            "title": result['metadatas'][0]['job_title'],
+            "company": result['metadatas'][0]['company'],
+            "location": result['metadatas'][0]['location'],
+            "url": result['metadatas'][0]['url']
+        }
+    else:
+        return None
+
+def count_jobs():
+    """Count total jobs in database"""
+    return jobs_collection.count()
+
+def verify_job_stored(job_id):
+    """Verify if a job was successfully stored"""
+    job = get_job_by_id(job_id)
+    if job:
+        print("\n" + "="*80)
+        print("JOB FOUND IN DATABASE!")
+        print("="*80)
+        print(f"ID: {job['id']}")
+        print(f"Title: {job['title']}")
+        print(f"Company: {job['company']}")
+        print(f"Location: {job['location']}")
+        print(f"URL: {job['url']}")
+        print(f"\nDocument (first 300 chars):\n{job['document'][:300]}...")
+        print("="*80)
+        return True
+    else:
+        print(f"Job with ID '{job_id}' not found in database")
+        return False
+
+def printJobInfo(job):
+    if job:
+        print("\n" + "="*80)
+    print("COMPLETE JOB DATA:")
+    print("="*80)
+    print(f"Company: {job['company']}")
+    print(f"Position: {job['position']}")
+    print(f"Location: {job['location']}")
+    print(f"Salary: {job['salary']}")
+    print(f"Age: {job['age']}")
+    print(f"Date Posted: {job.get('datePosted', 'N/A')}")
+    print(f"Employment Type: {job.get('employmentType', 'N/A')}")
+    print(f"URL: {job['apply_url']}")
     
-    # Test search
-    results = search_jobs_by_similarity("python machine learning", n_results=1)
-    print(f"Found {len(results)} jobs")
-    print(results)
+    print("\n" + "-"*80)
+    print("FULL DESCRIPTION (All Sections):")
+    print("-"*80)
+    print(job['description'])
+    
+    # If responsibilities and qualifications are separate fields
+    if job.get('responsibilities') != 'N/A':
+        print("\n" + "-"*80)
+        print("RESPONSIBILITIES:")
+        print("-"*80)
+        print(job.get('responsibilities'))
+
+    if job.get('qualifications') != 'N/A':
+        print("\n" + "-"*80)
+        print("qualifications:")
+        print("-"*80)
+        print(job.get('qualifications'))
+
+
+    if job.get('educationRequirements') != 'N/A':
+        print("\n" + "-"*80)
+        print("EDUCATION REQUIREMENTS:")
+        print("-"*80)
+        print(job.get('educationRequirements'))
+
+    if job.get('experienceRequirements') != 'N/A':
+        print("\n" + "-"*80)
+        print("EXPERIENCE REQUIREMENTS:")
+        print("-"*80)
+        print(job.get('experienceRequirements'))
+
+    if job.get('skills') != 'N/A':
+        print("\n" + "-"*80)
+        print("REQUIRED SKILLS:")
+        print("-"*80)
+        print(job.get('skills'))   #job_data["detailed_salary"] = detailed_salary
+
+
+    if job.get('detailed_salary') != 'N/A':
+        print("\n" + "-"*80)
+        print("SALARY INFORMATION:")
+        print("-"*80)
+        print(job.get('detailed_salary'))
+
+    print("="*80)
