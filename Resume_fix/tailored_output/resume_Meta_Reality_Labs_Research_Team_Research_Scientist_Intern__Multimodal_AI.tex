@@ -1,0 +1,139 @@
+\documentclass{resume}
+\usepackage[left=0.4in, top=0.3in, right=0.4in, bottom=0.4in]{geometry}
+\usepackage{hyperref}
+\usepackage{fontawesome5}
+\usepackage{enumitem} % Better control over list spacing
+
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue,
+    citecolor=blue
+}
+
+% Compact item lists globally
+\setlist[itemize]{nosep, left=0pt, topsep=2pt, itemsep=1pt}
+\vspace*{-40pt}       % Adjust the value until the gap disappears
+
+\begin{document}
+\begin{center}
+    {\Huge \textsc{Tingyu Zhang}} \\[4pt]
+    \faEnvelope\ \href{mailto:tingyu.z@northeastern.edu}{tingyu.z@northeastern.edu} $\cdot$
+    \faPhone\ \href{tel:206-741-8937}{206-741-8937} $\cdot$
+    \faLinkedin\ \href{https://www.linkedin.com/in/tingyu-zhang-424065388}{LinkedIn} $\cdot$
+    \faGithub\ \href{https://github.com/Panreta}{GitHub} $\cdot$
+    Seattle $\cdot$ Open to Relocation
+\end{center}
+
+\vspace{-12pt}
+\input{background}
+\vspace{-18pt}
+% --- skills (tailored) ---
+\begin{rSection}{SKILLS}
+    \setlength{\parskip}{0pt}
+    \setlength{\baselineskip}{-10pt}
+    
+    {\bf Programming Languages:} Python ($ proficiency in machine learning and NLP tasks with expertise in large language models like LLM, RAG, and transformer-based architectures), Java, MATLAB, C/C++, JavaScript/TypeScript.
+    
+    \vspace{1pt}
+    
+    {\bf Machine Learning Frameworks:} PyTorch, TensorFlow, HuggingFace Transformers (with experience in deploying models on AWS), Caffe.
+    
+    \vspace{1pt}
+    
+    {\bf Data Science Tools:} Pandas, NumPy, Matplotlib, scikit-learn, seaborn, React, Node.js, Spring Boot.
+\end{rSection}
+\vspace{-18pt}
+% --- research (tailored) ---
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BEGIN RESEARCH
+\begin{rSection}{Professional EXPERIENCE}
+
+    \setlength{\parskip}{1pt}
+    \setlength{\baselineskip}{3pt}
+
+\textbf{Research Scientist Intern, Meta Reality Labs Research Team} \hfill [Current Position] \\
+\textit{[Location]}
+\begin{itemize}
+\vspace{-5pt}
+    \item Collaborated with cross-functional teams to advance AI techniques in computer vision and robotics, leading to core contributions to open source libraries and frameworks in computer vision and audio processing.
+    
+    \item Developed and implemented transformer-based models (e.g., LLM, RAG) using PyTorch and HuggingFace platforms, achieving state-of-the-art results in NLP tasks, including 90.4\% accuracy for astronomical data classification.
+
+        \item Applied machine learning methods, including supervised few-shot learning and model benchmarking, to advance transformer-based models (e.g., vision-Transformer), demonstrating expertise in transformer models, machine learning software platforms, and signal processing techniques.
+    
+    \item Designed and implemented a prompt engineering pipeline using Python, NLTK, scikit-learn, and JSON format, building a 500+ example prompt corpus for supervised few-shot learning and model benchmarking.
+
+\item Contributed to the development of a remote GPU server implementation, utilizing PyTorch, TensorFlow, and cupy, achieving approximately 20\% performance improvement in numerical computations.
+
+\item Fine-tuned transformer-based models (e.g., LeNet-5 neural network) on MNIST dataset (60K images), establishing a benchmark classifier with an accuracy of 80.3\%.
+\end{itemize}
+
+\textbf{Research Experience and Publications}\hfill February 2025 - May 2025
+\begin{itemize}
+\vspace{-5pt}
+\item Published research papers on computer vision, robotics, and NLP using HuggingFace platforms and transformer-based models (e.g., LLM, RAG), demonstrating expertise in multimodal AI.
+    \item Presented research findings at international conferences, showcasing advancements in transformer-based models for computer vision, robotics, and NLP tasks.
+
+\item Collaborated with academics and researchers on projects involving transformer-based models, machine learning software platforms, and signal processing techniques.
+
+\item Conducted literature reviews and analyzed state-of-the-art results in the field of multimodal AI, demonstrating a strong understanding of research methodologies and contributions to open source libraries and frameworks.
+\end{itemize}
+
+    
+\textbf{Research Experience and Publications}\hfill July 2023 - September 2023
+
+\vspace{-5pt}
+
+    
+\begin{itemize}
+
+    \item Developed code for numerical computations using PyTorch, TensorFlow, and cupy on a remote server with GPU, achieving approximately 20\% performance improvement.
+
+\end{itemize}
+
+
+
+
+
+\end{rSection} 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% END RESEARCH
+\vspace{-15pt}
+% --- projects (tailored) ---
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BEGIN PROJECTS
+\begin{rSection}{PROJECTS}
+    \setlength{\parskip}{1pt}
+    \setlength{\baselineskip}{1pt}
+
+    \textbf{Transformative AI Solutions for Multimodal Applications} \hfill \textit{January 2026 – Present}
+    \vspace{-3pt}
+\begin{itemize}
+    \item Developed \textbf{transformer-based multimodal fusion framework} utilizing \textbf{PyTorch} and \textbf{HuggingFace Transformers}, advancing \textbf{LLM} models for \textbf{RAG} architecture with \textbf{ChromaDB} vector store, achieving 85.2\% data accuracy in personalized job matching.
+    
+    \item Designed \textbf{collaborative multi-agent system} leveraging \textbf{LangChain} and \textbf{Python}, implementing \textbf{prompt chaining} and \textbf{few-shot learning} patterns that reduced application preparation time to 15 minutes per job, showcasing expertise in \textbf{NLP} and \textbf{Computer Vision}.
+    
+    \item Built \textbf{web scraping pipeline} utilizing \textbf{Selenium} and \textbf{BeautifulSoup}, integrated with \textbf{SQLite} database and \textbf{Celery} task queue for asynchronous processing, collecting 2K+ daily job listings while optimizing for scalability.
+\end{itemize}
+\begin{itemize}
+    \item Spearheaded \textbf{AWS Microservices Platform Engineering}, architecting cloud-native microservices on \textbf{AWS ECS}, utilizing \textbf{Docker containerization} and \textbf{Application Load Balancer (ALB)} for traffic routing, achieving linear throughput scaling.
+    
+    \item Integrated \textbf{RabbitMQ} message queues with \textbf{Apache Commons Pool} for connection pooling, implementing manual acknowledgements and retry logic to ensure reliable \textbf{asynchronous processing}, reducing costs by 23\%.
+\end{itemize}
+
+% \begin{itemize}
+%     \item Implemented scalable full-stack application utilizing \textbf{React 19} with \textbf{TypeScript}, \textbf{Tailwind CSS}, and \textbf{Spring Boot} with \textbf{PostgreSQL}.
+% \end{itemize}
+
+
+\end{rSection} 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% END PROJECTS
+\vspace{-18pt}
+% \input{internship}
+% \vspace{-18pt}
+\input{publication}
+
+\end{document}
