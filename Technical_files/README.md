@@ -1,0 +1,1 @@
+This folder stores all the tech terms I learnt for this project.

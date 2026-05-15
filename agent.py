@@ -23,14 +23,14 @@ def run_agent():
         response = ask_llama(prompt)
         
         # Check if LLM wants to use a tool
-        if "[TOOL:" in response:
-            tool_name, tool_args = parse_tool_call(response)
+        # if "[TOOL:" in response: # I got [TOOL: in the response, and I wonder what tool it is
+        #     tool_name, tool_args = parse_tool_call(response)
             
-            tool_result = execute_tool(tool_name, tool_args)
+        #     tool_result = execute_tool(tool_name, tool_args)
             
-            # Send result back to LLM
-            followup_prompt = f"Tool '{tool_name}' returned: {tool_result}\n\nNow respond to the user."
-            response = ask_llama(followup_prompt)
+        #     # Send result back to LLM
+        #     followup_prompt = f"Tool '{tool_name}' returned: {tool_result}\n\nNow respond to the user."
+        #     response = ask_llama(followup_prompt)
         
         print(f"Agent: {response}\n")
         
@@ -43,7 +43,8 @@ def build_prompt(user_input, history):
     
     history_text = "\n".join([f"User: {h['user']}\nAgent: {h['agent']}" for h in history[-5:]])
     
-    prompt = f"""You are a job search assistant agent. You can use tools to help the user.
+    prompt = f"""
+    You are a job search assistant agent. You can use tools to help the user.
 
     Available tools:
     {tools_description}
@@ -54,7 +55,8 @@ def build_prompt(user_input, history):
     {history_text}
 
     User: {user_input}
-    Agent:"""
+    Agent:
+    """
     
     return prompt
 
@@ -65,11 +67,33 @@ def parse_tool_call(response):
         tool_part = response.split("[TOOL:")[1].split("]")[0].strip()
         args_part = response.split("]")[1].strip()
 
-        tool_args = json.loads(args_part) if args_part else {}
+        tool_args = json.loads(args_part) if args_part else {} # put args_part into dict
         
         return tool_part, tool_args
     except:
         return None, {}
+"""
+For tool_part:
+response.split("[TOOL:")
+# → ['', ' search_jobs] {"keywords": "python"}']
 
+response.split("[TOOL:")[1]
+# → ' search_jobs] {"keywords": "python"}'
+
+response.split("[TOOL:")[1].split("]")[0]
+# → ' search_jobs'
+
+tool_part = ...strip()
+# → 'search_jobs'  
+"""
+"--------------------------------------"
+"""
+For args_part:
+response.split("]")[1]
+# → ' {"keywords": "python"}'
+
+args_part = ...strip()
+# → '{"keywords": "python"}'
+"""
 if __name__ == "__main__":
     run_agent()

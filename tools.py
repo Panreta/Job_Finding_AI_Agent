@@ -1,4 +1,8 @@
-# Tool functions that the agent can call
+"""
+Tool functions that the agent can call
+
+"""
+
 import json
 import os
 from datetime import datetime

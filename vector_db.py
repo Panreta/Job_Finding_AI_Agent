@@ -1,6 +1,7 @@
 import chromadb
 from chromadb.config import Settings
 
+# Method to initial and use ChromaDB
 # Initialize ChromaDB client
 # client = chromadb.Client(Settings(
 #     persist_directory="./data/chroma_db",

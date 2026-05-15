@@ -1,4 +1,8 @@
-# Ollama communication module
+"""
+Ollama communication module.
+Sends prompts to a local LLaMA model and returns the generated response.
+"""
+
 import requests
 import json
 
@@ -10,18 +14,23 @@ def ask_llama(prompt, stream=True):
         response = requests.post(
             OLLAMA_URL,
             json={
-                "model": MODEL,
-                "prompt": prompt,
-                "stream": stream
-            },
-            timeout=120 #  "If Ollama doesn't respond within 120 seconds (2 minutes), stop waiting and raise an error."
+                "model": MODEL,"prompt": prompt,"stream": stream},
+            timeout=120, #  "If Ollama doesn't respond within 120 seconds (2 minutes),
+            # stop waiting and raise an error."
+            stream=stream
         )
         
         if response.status_code == 200: # When you make an HTTP request, the server responds with a status code 
 
             # 404: Not Found, 500: Internal Server Error, 505: HTTP Version Not Supported
-            response = response.json()
-            return response.get('response', '').strip()
+            full_response = ""
+            for line in response.iter_lines():
+                if line:
+                    chunk = json.loads(line)
+                    full_response += chunk.get("response", "")
+                    if chunk.get("done"):
+                        break
+            return full_response.strip()
         else:
             return f"Error: Ollama returned status {response.status_code}"
     
@@ -32,13 +41,13 @@ def ask_llama(prompt, stream=True):
 
 def test_ollama():
     """Test if Ollama is working"""
-    response = ask_llama("Say 'Hello! I am working!' if you can read this.")
+    prompt = "To be or not to be"
+    response = ask_llama(prompt)
     print(f"Ollama test: {response}")
     return "working" in response.lower()
 
 if __name__ == "__main__":
-    # Test the connection
     if test_ollama():
-        print("✓ Ollama is working!")
+        print("Ollama is working!")
     else:
-        print("✗ Ollama connection failed")
+        print("Ollama connection failed")
