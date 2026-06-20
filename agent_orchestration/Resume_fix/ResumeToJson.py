@@ -1,12 +1,12 @@
 """
-Resume Storage: .tex files → 2 JSON files
+Resume Storage: .tex files -> 2 JSON files
 ==========================================
 Produces:
-  1. resume_template.json  → LaTeX skeleton (main.tex + resume.cls) with placeholders
-  2. resume_content.json   → Your actual experience, structured by category
+  1. resume_template.json  -> LaTeX skeleton (main.tex + resume.cls) with placeholders
+  2. resume_content.json   -> Your actual experience, structured by category
 
 Later, your pipeline does:
-  template + selected content + job requirements → Ollama → new tailored .tex
+  template + selected content + job requirements -> Ollama -> new tailored .tex
   
 pip install pylatexenc
 """
@@ -19,8 +19,8 @@ from pylatexenc.latex2text import LatexNodes2Text
 # ─────────────────────────────────────────────
 # CONFIG
 # ─────────────────────────────────────────────
-RESUME_DIR = Path(r"D:\Github\Job_Finding_AI_Agent\Resume_fix\CV__MLE__Copy_")
-OUTPUT_DIR = Path(r"D:\Github\Job_Finding_AI_Agent\Resume_fix")
+RESUME_DIR = Path(r"D:\Github\Job_Finding_AI_Agent\agent_orchestration\Resume_fix\CV\CV__AI_INFRA")
+OUTPUT_DIR = Path(r"D:\Github\Job_Finding_AI_Agent\agent_orchestration\Resume_fix")
 
 # What each file contains
 CONTENT_FILES = {
@@ -38,8 +38,8 @@ TEMPLATE_FILES = ["main.tex", "resume.cls"]
 # ─────────────────────────────────────────────
 # LaTeX Cleaner
 # ─────────────────────────────────────────────
-def latex_to_text(latex: str) -> str:
-    """Convert LaTeX → readable text, handling resume-specific patterns."""
+def latex_to_text(latex: str):
+    """Convert LaTeX -> readable text, handling resume-specific patterns."""
     try:
         text = LatexNodes2Text().latex_to_text(latex)
     except Exception:
@@ -51,7 +51,7 @@ def latex_to_text(latex: str) -> str:
     return text.strip()
 
 
-def extract_items(latex: str) -> list[str]:
+def extract_items(latex: str):
     """
     Try to extract individual items (jobs, degrees, projects)
     from a LaTeX section. Splits on common resume entry patterns.
@@ -87,7 +87,7 @@ def extract_items(latex: str) -> list[str]:
 # Main Extraction
 # ─────────────────────────────────────────────
 def extract_resume():
-    """Read .tex files → produce template.json + content.json"""
+    """Read .tex files -> produce template.json + content.json"""
 
     print(f"Reading from: {RESUME_DIR}\n")
 
@@ -102,7 +102,7 @@ def extract_resume():
     template_out = OUTPUT_DIR / "resume_template.json"
     with open(template_out, "w", encoding="utf-8") as f:
         json.dump(template, f, indent=2, ensure_ascii=False)
-    print(f"\nTemplate → {template_out}")
+    print(f"\nTemplate -> {template_out}")
 
     # ── 2. Content ──
     content = {}
@@ -120,12 +120,12 @@ def extract_resume():
             "items": items,                      # individual entries
             "full_text": latex_to_text(raw),     # entire section as text
         }
-        print(f"{fname:20s} → {category:20s} ({len(items)} items)")
+        print(f"{fname:20s} -> {category:20s} ({len(items)} items)")
 
     content_out = OUTPUT_DIR / "resume_content.json"
     with open(content_out, "w", encoding="utf-8") as f:
         json.dump(content, f, indent=2, ensure_ascii=False)
-    print(f"\n Content  → {content_out}")
+    print(f"\n Content  -> {content_out}")
 
     # ── 3. Preview ──
     print("\n" + "=" * 60)
@@ -199,13 +199,13 @@ if __name__ == "__main__":
     print("""
 Your resume is now stored as:
 
-  resume_template.json   ← main.tex + resume.cls
-  resume_content.json    ← all your experience by category
+  resume_template.json   <- main.tex + resume.cls
+  resume_content.json    <- all your experience by category
 
 Each category has:
-  "raw_latex"  → original LaTeX (for rebuilding the .tex file)
-  "items"      → individual entries as clean text (for LLM)
-  "full_text"  → entire section as clean text
+  "raw_latex"  -> original LaTeX (for rebuilding the .tex file)
+  "items"      -> individual entries as clean text (for LLM)
+  "full_text"  -> entire section as clean text
 
 In your job-tailoring code:
 
